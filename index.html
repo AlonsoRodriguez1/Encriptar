@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptar | Desencriptar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-neutral-950 h-screen overflow-hidden">
+
+    <div class="container mx-auto mt-32">
+        <div class="grid grid-cols-3 gap-10">
+            <div class="col-span-2">
+                <h1 class="text-white uppercase text-3xl font-semibold mb-4">Encriptar | Desencriptar</h1>
+
+                <textarea id="miTextarea" placeholder="Mensaje a encriptar o desencriptar" class="w-full border-solid outline outline-offset-0 rounded-md resize-none appearance-none p-2 text-2xl font-medium text-white bg-neutral-950 border-white" cols="90" rows="18"></textarea>
+
+                <div class="flex mt-4 gap-5 w-full">
+                    <button onclick="encriptar()" class="cursor-pointer w-full text-center border-solid outline outline-offset-0 rounded-md p-2 text-2xl font-medium text-white bg-neutral-950">Encriptar</button>
+                    <button onclick="desencriptar()" class="cursor-pointer w-full text-center border-solid outline outline-offset-0 rounded-md p-2 text-2xl font-medium bg-white">Desencriptar</button>
+                </div>
+            </div>
+
+            <div class="flex flex-col border-solid outline outline-offset-0 rounded-md p-2 text-2xl font-medium text-white bg-neutral-950 border-gray-400">
+                <div class="h-full">
+                    <textarea id="campoResultado" placeholder="No hay mensaje para copiar" readonly class="h-full w-full outline outline-transparent   resize-none appearance-none overflow-x-hidden p-2 text-2xl font-medium bg-neutral-950"></textarea>
+                </div>
+
+
+                <div class="mb-1 mt-auto">
+                    <button onclick="copiar()" class="w-full text-center border-solid outline outline-offset-0 rounded-md p-2 text-2xl font-medium text-white bg-neutral-950">Copiar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        function encriptar() {
+            // Seleccionamos el texto del textarea
+            var textarea = document.getElementById('miTextarea');
+            var textoOriginal = textarea.value;
+
+            // Validamos si no hay contenido para encriptar
+            if (!textoOriginal) {
+                alert('Escribe un texto para encriptar');
+            }
+
+            // Creamos un objeto para almacenar las letras que queremos encriptar
+            var letrasRemplazo = {
+                'e': 'enter',
+                'i': 'imes',
+                'a': 'ai',
+                'o': 'ober',
+                'u': 'ufat'
+            };
+
+            // Corremos el objeto de letrasRemplazo
+            function funcionReemplazo(match) {
+                return letrasRemplazo[match] || match;
+            }
+
+            // Reemplazar las letras por palabras y encriptamos
+            var textoEncriptado = textoOriginal.replace(/[a-z]/gi, funcionReemplazo);
+
+            // Pasamos el resultado encriptado al bloque de campoResultado
+            var campoResultado = document.getElementById('campoResultado');
+            campoResultado.value = textoEncriptado;
+
+            textarea.value = '';
+            textarea.focus();
+        }
+
+        function desencriptar() {
+            // Seleccionamos el texto del textarea
+            var textarea = document.getElementById('miTextarea');
+            var textoCifrado = textarea.value;
+
+            // Validamos que contenga un texto
+            if (!textoCifrado) {
+                alert('Escribe un texto para desencriptar');
+            }
+
+            // Creamos un objeto para almacenar las palabras que queremos desencriptar
+            var palabrasRemplazo = {
+                'enter': 'e',
+                'imes': 'i',
+                'ai': 'a',
+                'ober': 'o',
+                'ufat': 'u',
+            }
+
+            // Corremos el objeto de palabrasRemplazo
+            function funcionReemplazo(match) {
+                return palabrasRemplazo[match] || match;
+            }
+
+            // Remplazamos las palabras por letras y desencriptamos
+            var textoDescifrado = textoCifrado.replace(/ai|enter|imes|ufat|ober/g, funcionReemplazo);
+
+            // Pasamos el contenido desencriptado al bloque de campoResultado
+            var campoResultado = document.getElementById('campoResultado');
+            campoResultado.value = textoDescifrado;
+
+            textarea.value = '';
+            textarea.focus();
+        }
+
+        function copiar() {
+            // Seleccionamos el textarea a copiar
+            var copiarTexto = document.getElementById('campoResultado').value;
+
+            // Creamos un textarea y le asignamos el valor de copiaTexto y le pasamos un appendChild y se agrega al cuerpo del documento DOM
+            var textoTemporal = document.createElement('textarea');
+            textoTemporal.value = copiarTexto;
+            document.body.appendChild(textoTemporal);
+
+            // Selecciona todo el contenido con select() y mantenemos el contenido en un portapapeles con execCommand()
+            textoTemporal.select();
+            document.execCommand('copy');
+
+            // Luego eliminamos el textarea que habiamos agregado al cuerpo del documento DOM
+            document.body.removeChild(textoTemporal);
+
+            // Consultamos si hay texto para copiar
+            if (copiarTexto) {
+                alert('Copiado Correctamente')
+            } else {
+                alert('No hay texto para copiar')
+            }
+        }
+    </script>
+
+</body>
+
+</html>
