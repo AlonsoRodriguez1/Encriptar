@@ -8,26 +8,37 @@
     <title>Encriptar | Desencriptar</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <link rel="stylesheet" href="/node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+
 </head>
 
-<body class="bg-neutral-950 h-screen overflow-hidden">
+<body class="bg-neutral-950 h-screen lg:overflow-hidden mx-8 md:mx-4 lg:mx-4 xl:mx-0">
 
-    <div class="container mx-auto mt-32">
-        <div class="grid grid-cols-3 gap-10">
-            <div class="col-span-2">
+    <header class="md:container md:mx-auto md:flex mt-6 md:justify-between items-center text-center">
+        <h1 class="text-white uppercase text-3xl font-semibold ">Alonso Rodriguez</h1>
+
+        <nav class="grid grid-rows-2 md:flex gap-4 mt-6 md:mt-0">
+            <a href="https://github.com/AlonsoRodriguez1" class="text-white uppercase text-3xl font-semibold">GITHUB<i class="fa-brands fa-github ml-2" style="color: #ffffff;"></i></a>
+            <a href="https://www.linkedin.com/in/alonso-rodriguez-a55b0b208/" class="text-white uppercase text-3xl font-semibold ml-4">LINKEDIN<i class="fa-brands fa-linkedin ml-2" style="color: #ffffff;"></i></a>
+        </nav>
+    </header>
+
+    <div class="md:container md:mx-auto mt-24">
+        <div class="grid lg:grid-cols-3 gap-10 flex flex-row mb-24 lg:mb-0">
+            <div class="lg:col-span-2">
                 <h1 class="text-white uppercase text-3xl font-semibold mb-4">Encriptar | Desencriptar</h1>
 
                 <textarea id="miTextarea" placeholder="Mensaje a encriptar o desencriptar" class="w-full border-solid outline outline-offset-0 rounded-md resize-none appearance-none p-2 text-2xl font-medium text-white bg-neutral-950 border-white" cols="90" rows="18"></textarea>
 
-                <div class="flex mt-4 gap-5 w-full">
+                <div class="md:flex mt-6 md:mt-4 gap-5 w-full">
                     <button onclick="encriptar()" class="cursor-pointer w-full text-center border-solid outline outline-offset-0 rounded-md p-2 text-2xl font-medium text-white bg-neutral-950">Encriptar</button>
-                    <button onclick="desencriptar()" class="cursor-pointer w-full text-center border-solid outline outline-offset-0 rounded-md p-2 text-2xl font-medium bg-white">Desencriptar</button>
+                    <button onclick="desencriptar()" class="cursor-pointer w-full mt-6 md:mt-0 text-center border-solid outline outline-offset-0 rounded-md p-2 text-2xl font-medium bg-white">Desencriptar</button>
                 </div>
             </div>
 
             <div class="flex flex-col border-solid outline outline-offset-0 rounded-md p-2 text-2xl font-medium text-white bg-neutral-950 border-gray-400">
                 <div class="h-full">
-                    <textarea id="campoResultado" placeholder="No hay mensaje para copiar" readonly class="h-full w-full outline outline-transparent   resize-none appearance-none overflow-x-hidden p-2 text-2xl font-medium bg-neutral-950"></textarea>
+                    <textarea id="campoResultado" placeholder="No hay mensaje para copiar" readonly class="h-96 lg:h-full w-full outline outline-transparent   resize-none appearance-none overflow-x-hidden p-2 text-2xl font-medium bg-neutral-950"></textarea>
                 </div>
 
 
@@ -39,7 +50,7 @@
     </div>
 
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function encriptar() {
             // Seleccionamos el texto del textarea
@@ -48,7 +59,13 @@
 
             // Validamos si no hay contenido para encriptar
             if (!textoOriginal) {
-                alert('Escribe un texto para encriptar');
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Escribe un texto para encriptar',
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                    timer: 3000
+                })
             }
 
             // Creamos un objeto para almacenar las letras que queremos encriptar
@@ -83,7 +100,13 @@
 
             // Validamos que contenga un texto
             if (!textoCifrado) {
-                alert('Escribe un texto para desencriptar');
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Escribe un texto para desencriptar',
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                    timer: 3000
+                })
             }
 
             // Creamos un objeto para almacenar las palabras que queremos desencriptar
@@ -129,9 +152,21 @@
 
             // Consultamos si hay texto para copiar
             if (copiarTexto) {
-                alert('Copiado Correctamente')
+                Swal.fire({
+                    title: 'Copiado!',
+                    text: 'Texto copiado Correctamente',
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                    timer: 3000
+                })
             } else {
-                alert('No hay texto para copiar')
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'No hay texto para copiar',
+                    icon: 'error',
+                    confirmButtonText: 'X',
+                    timer: 3000
+                })
             }
         }
     </script>
